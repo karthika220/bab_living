@@ -111,18 +111,54 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ---- TESTIMONIALS SLIDER ---- */
   const testiTrack = document.getElementById('testiTrack');
-  const testiSlides = document.querySelectorAll('.testi-slide');
   const testiPrev = document.getElementById('testiPrev');
   const testiNext = document.getElementById('testiNext');
+  let testiSlides = [];
   let testiCurrent = 0;
+  const testiCardsSource = testiTrack
+    ? Array.from(testiTrack.querySelectorAll('.testi-card')).map(card => card.cloneNode(true))
+    : [];
+
+  function buildTestimonialSlides() {
+    if (!testiTrack || !testiCardsSource.length) return;
+    const cardsPerSlide = window.innerWidth <= 768 ? 1 : 2;
+    testiTrack.innerHTML = '';
+
+    for (let i = 0; i < testiCardsSource.length; i += cardsPerSlide) {
+      const slide = document.createElement('div');
+      slide.className = 'testi-slide';
+      if (i === 0) slide.classList.add('active');
+
+      const grid = document.createElement('div');
+      grid.className = 'testi-grid';
+
+      for (let j = i; j < i + cardsPerSlide && j < testiCardsSource.length; j++) {
+        const card = testiCardsSource[j].cloneNode(true);
+        // Rebuilt testimonial cards should be immediately visible.
+        card.classList.remove('reveal-left', 'reveal-right', 'reveal-up');
+        card.classList.add('visible');
+        grid.appendChild(card);
+      }
+
+      slide.appendChild(grid);
+      testiTrack.appendChild(slide);
+    }
+
+    testiSlides = Array.from(testiTrack.querySelectorAll('.testi-slide'));
+    testiCurrent = 0;
+    testiTrack.style.transform = 'translateX(0)';
+  }
 
   function goToTesti(idx) {
+    if (!testiSlides.length || !testiTrack) return;
     testiCurrent = (idx + testiSlides.length) % testiSlides.length;
     testiTrack.style.transform = `translateX(-${testiCurrent * 100}%)`;
   }
 
+  buildTestimonialSlides();
   if (testiNext) testiNext.addEventListener('click', () => goToTesti(testiCurrent + 1));
   if (testiPrev) testiPrev.addEventListener('click', () => goToTesti(testiCurrent - 1));
+  window.addEventListener('resize', buildTestimonialSlides);
 
   /* ---- BENEFIT ICON AUTO PREVIEW ---- */
   const benefitItems = document.querySelectorAll('.benefit-item');

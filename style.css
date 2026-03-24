@@ -172,7 +172,7 @@ p {
   transition: top 0.3s ease, box-shadow 0.3s ease;
 }
 .navbar.scrolled {
-  box-shadow: 0 2px 12px rgba(0,0,0,0.16);
+  box-shadow: none;
 }
 .navbar.topbar-hidden {
   top: 0;
@@ -928,13 +928,77 @@ p {
 
 @media (max-width: 768px) {
   :root { --topbar-h: 40px; --nav-h: 70px; }
-  .container { padding: 0 20px; }
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  .topbar,
+  .navbar,
+  .hero,
+  .value-prop,
+  .brands,
+  .benefits,
+  .testimonials,
+  .contact,
+  .faq,
+  .final-cta,
+  .footer {
+    width: 100%;
+    max-width: 100%;
+  }
+  .container {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 16px;
+  }
   .topbar { padding: 0 20px; }
-  .navbar { padding: 0 20px; }
+  .navbar {
+    padding: 0 20px;
+    justify-content: center;
+  }
+  .nav-logo { margin-left: 0; }
+  .nav-cta {
+    margin-right: 0;
+    display: none;
+  }
+  .nav-logo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .navbar .btn-outline {
+    font-size: 14px;
+    padding: 10px 16px;
+  }
   .topbar-left { font-size: 11px; gap: 6px; }
+  .topbar-right { font-size: 11px; }
   .logo-img { height: 44px; }
-  .hero-content { padding: 0 20px; }
-  .hero-title { font-size: 34px; }
+  .hero {
+    min-height: 640px;
+    align-items: center;
+    padding-bottom: 0;
+  }
+  .hero::after { bottom: 16px; }
+  .hero-content {
+    padding: 0 20px;
+    max-width: 100%;
+  }
+  .hero-title {
+    font-size: 34px;
+    line-height: 1.12;
+    margin-bottom: 14px;
+  }
+  .hero-content .btn-primary {
+    font-size: 16px;
+    padding: 10px 16px;
+  }
+  /* Disable zoom animation on mobile to avoid zoom-in/out effect */
+  .hero-bg img,
+  .hero-bg video {
+    transform: none;
+    animation: none;
+  }
   .value-grid,
   .brands-grid,
   .contact-grid,
@@ -943,12 +1007,64 @@ p {
   .map-grid,
   .form-row { grid-template-columns: 1fr; }
   .value-image img { height: 300px; }
+  .value-text h2 { font-size: 36px; }
   .benefits-grid { grid-template-columns: 1fr; }
+  .benefits-title { font-size: 34px; margin-bottom: 36px; }
+  .benefit-item p { font-size: 17px; }
+  .brands-left h2 { font-size: 34px; white-space: normal; }
+  .brands-left p { font-size: 16px; margin-bottom: 24px; }
+  .brand-name { font-size: 22px; }
   .testimonials-header { flex-direction: column; gap: 20px; }
-  .testi-card { padding: 28px 24px; }
+  .testimonials-header h2 { font-size: 36px; }
+  .testi-card { padding: 12px 0; }
+  .testi-text { font-size: 19px; line-height: 1.5; }
+  .contact-left h2 { font-size: 32px; white-space: normal; }
+  .contact-left p { font-size: 16px; }
+  .faq-left h2 { font-size: 34px; }
+  .faq-right { margin-top: 0; }
+  .faq-q { font-size: 19px; }
+  .faq-a p { font-size: 18px; }
+  .final-cta-inner h2 { font-size: 34px; }
+  .final-cta-inner p { font-size: 16px; }
   .footer-main { flex-direction: column; gap: 32px; }
   .footer-bottom { padding: 20px; flex-direction: column; gap: 10px; text-align: center; }
-  .brands-carousel { display: flex; }
+  .brands-carousel {
+    display: flex;
+    gap: 0;
+  }
+  .brands-carousel-viewport {
+    width: 100%;
+  }
+  .brands-carousel-wrap {
+    overflow: hidden;
+  }
   .brand-card { flex: 0 0 100%; }
-  .brand-card img { height: 260px; }
+  .brand-card img {
+    width: 100%;
+    height: 260px;
+    object-position: center;
+  }
+  .brands-carousel-wrap .carousel-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    inset: 0;
+    padding: 0 10px;
+  }
+  #brandPrev,
+  #brandNext {
+    position: static;
+    transform: none;
+    width: 48px;
+    height: 48px;
+    font-size: 28px;
+  }
+  .call-float,
+  .whatsapp-float {
+    width: 50px;
+    height: 50px;
+    bottom: 18px;
+  }
+  .call-float { left: 18px; }
+  .whatsapp-float { right: 18px; }
 }
